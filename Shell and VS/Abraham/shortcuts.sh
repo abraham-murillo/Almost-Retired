@@ -1,5 +1,5 @@
 user="/Users/abraham"
-icpcDir="${user}/The-Empire-Strikes-Back/ICPC"
+icpcDir="${user}/Almost-Retired"
 
 alias myBash="open ~/.zshenv"
 alias saveMyBash="source ~/.zshenv" 
@@ -98,49 +98,3 @@ run() {
 debug() {
   go -DLOCAL $1 $2
 } 
-
-random() {
-  # random solution [brute] [generator]
-
-  solution=$1
-  brute="brute"
-  generator="gen"
-  if [ $# -ge 2 ]; then
-    brute=$2
-    if [ $# -ge 3 ]; then
-      generator=$3
-    fi
-  fi
-
-  compile ${generator}
-  compile ${solution}
-  compile ${brute}
-
-  generateTestCase() {
-    # cpp > py generator
-    if [[ -f ${generator}.cpp ]]; then
-      ./${generator}.out > in
-    else
-      python3 ${generator}.py | cat > in 
-    fi
-  }
-
-  for ((i = 1; i <= 300; i++)); do
-    printf "Test case #${i}"
-
-    generateTestCase
-
-    ./${solution}.out < in > myOut
-    ./${brute}.out < in > bruteForceOut
-
-    diff -ywi myOut bruteForceOut > diff${solution}
-
-    if [[ $? -eq 0 ]]; then
-      printf "${green} Accepted ${removeColor}\n"
-    else
-      printf "${red} Wrong answer ${removeColor}\n"
-      open diff${solution}
-      break
-    fi
-  done
-}

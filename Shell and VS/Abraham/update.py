@@ -1,7 +1,7 @@
 import glob
 import os
 
-icpcPath = "/Users/*/*/ICPC/"
+icpcPath = "/Users/*/Almost-Retired"
 
 def createSnippets():
   cppJsonPath = "/Users/*/Library/Application Support/Code/User/snippets/cpp.json"
@@ -59,6 +59,7 @@ def createSnippets():
       pathToFile = path + os.sep + file
 
       if file.endswith(".cpp"):
+        print(file)
         generate(file, pathToFile, cppJson)
 
   cppJson.write("}\n")
@@ -66,7 +67,7 @@ def createSnippets():
   print("Snippets updated")
 
 def updateMyClangFormat():
-  settingsJsonPath = "/Users/*/Library//Application Support/Code/User/settings.json"
+  settingsJsonPath = "/Users/*/Library/Application Support/Code/User/settings.json"
   settingsJsonFile = glob.glob(settingsJsonPath, recursive=True)[0]
   if os.path.isfile(settingsJsonFile) == False:
     print("Wtf!, you don't have settings.json for vscode")
@@ -104,4 +105,4 @@ def updateMyClangFormat():
 
 if __name__ == "__main__":
   createSnippets()
-  updateMyClangFormat()
+  # updateMyClangFormat()
